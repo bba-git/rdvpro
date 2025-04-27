@@ -1,5 +1,22 @@
-# Project Status Log\
-\
+# Project Status
+
+## Completed Tasks
+- ✅ AUTH-001: Authentication Service
+  - Implemented AuthService with Supabase login
+  - Implemented AuthController with login endpoint
+  - Added LoginDto for input validation
+  - Integrated audit logging for login attempts
+  - Implemented structured error handling
+  - Following NestJS standards and DTO validation
+
+## In Progress
+- APPT-001: Appointment Service
+- CORE-003: API Gateway Rate Limiting
+
+## Planned
+- MON-004: Prometheus and Grafana Setup
+- EXT-005: Stub MICEN Adapter
+
 ## Sprint: Foundation Setup (Week 1)\
 \
 ### \uc0\u55357 \u56999  In Progress\
