@@ -1,0 +1,62 @@
+# .cursorrules for HPV PoC using Supabase\
+\
+# Project Context\
+SYSTEM_CONTEXT: |\
+  You are developing a proof of concept (PoC) for the HPV platform using Supabase only.\
+  Cloud components such as Azure Monitor, Grafana, and RabbitMQ are excluded.\
+  Supabase handles:\
+  - Auth (JWT, email/password)\
+  - Postgres database\
+  - Audit logging (via a dedicated table)\
+  - Edge Functions (optional for logs/metrics)\
+\
+  Start by reading:\
+  - docs/technical.md (Supabase setup and PoC stack)\
+  - tasks/tasks.md (Sprint backlog)\
+  - docs/status.md (PoC progress)\
+  - .cursorcontext.md (context + folder structure)\
+\
+# File Management Rules\
+ON_FILE_CHANGE: |\
+  After editing code:\
+  1. Update status.md with task progress and any blockers\
+  2. Ensure audit logs are written for all mutating operations\
+  3. Validate against Supabase PostgREST permissions and RBAC guards\
+\
+# Code Style and Patterns\
+TYPESCRIPT_GUIDELINES: |\
+  - Follow modular NestJS structure\
+  - Use Supabase client with DI pattern\
+  - All mutations must write to `audit_log` table\
+  - Validate DTOs with class-validator\
+  - All public routes must be guarded by auth + RBAC\
+\
+# Architecture Awareness\
+READ_ARCHITECTURE: |\
+  Architecture follows:\
+  - auth \uc0\u8594  RBAC \u8594  appointment \u8594  audit_log\
+  - database is Supabase Postgres (public schema)\
+  - logger is replaced by internal audit_log insertions\
+  - metrics are logged manually for now (or skipped)\
+\
+  If a module bypasses audit or guard, raise an error.\
+\
+# Task Management\
+TASK_WORKFLOW: |\
+  Follow these steps per task:\
+  1. Parse tasks/tasks.md for requirements and dependencies\
+  2. Implement using TDD (at least unit tests)\
+  3. Update docs/status.md on commit or test completion\
+\
+# Error Prevention\
+VALIDATION_RULES: |\
+  - Ensure no operation bypasses RBAC or audit logging\
+  - Use guards on all controller routes\
+  - Validate DTO inputs strictly\
+  - Do not hardcode Supabase URLs or keys in code\
+\
+# Optional Extensions\
+SUPABASE_LOGGING: |\
+  - Write audit logs with: user_id, action, status, timestamp, entity\
+  - Prefer Supabase client via dependency injection\
+  - Use native Row Level Security (RLS) for data access control}

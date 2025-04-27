@@ -1,0 +1,53 @@
+graph TD\
+  subgraph Frontend\
+    Portal[Client Portal (BFF)]\
+  end\
+\
+  subgraph AuthSystem\
+    AuthService[Authentication Service]\
+    UserDB[(User Database)]\
+    LoggerSystem\
+  end\
+\
+  subgraph CoreServices\
+    AppointmentService\
+    SignatureService\
+    CaseTimelineService\
+    MICENAdapter\
+    PDPAdapter\
+  end\
+\
+  subgraph Infrastructure\
+    EventBus[(RabbitMQ)]\
+    LoggerSystem[(Audit & Log Aggregator)]\
+    APIManager[API Gateway / Rate Limiter]\
+    Metrics[(Prometheus Exporter)]\
+  end\
+\
+  subgraph Monitoring\
+    Grafana[(Grafana Dashboards)]\
+    AzureLogs[(Azure Monitor / Log Analytics)]\
+  end\
+\
+  Portal -->|Auth| AuthService\
+  AuthService --> UserDB\
+  AuthService --> LoggerSystem\
+\
+  Portal --> APIManager\
+  APIManager --> AppointmentService\
+  APIManager --> SignatureService\
+  APIManager --> CaseTimelineService\
+\
+  AppointmentService --> LoggerSystem\
+  SignatureService --> LoggerSystem\
+  CaseTimelineService --> LoggerSystem\
+\
+  AppointmentService --> EventBus\
+  SignatureService --> EventBus\
+\
+  CaseTimelineService --> MICENAdapter\
+  SignatureService --> PDPAdapter\
+\
+  LoggerSystem --> AzureLogs\
+  LoggerSystem --> Grafana\
+  Metrics --> Grafana}
