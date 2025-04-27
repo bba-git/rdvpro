@@ -45,11 +45,15 @@
   - Full test coverage with Supabase mocks
   - All tests passing with persistence layer
 
+- ✅ SIGN-001: Prepare Signature Module Skeleton
+  - Created src/signature/ module with service, controller, module, and DTOs
+  - Protected endpoints with JwtAuthGuard and set up audit log stubs
+  - Added unit tests for service and controller (all passing)
+
 ## In Progress
 - CORE-003: API Gateway Rate Limiting
 
 ## Planned
-- SIGN-001: Prepare Signature Module Skeleton
 - EVT-001: Set Up EventBus Architecture
 - MON-004: Observability Setup (local logging, later Prometheus stack)
 - EXT-005: Stub MICEN Adapter

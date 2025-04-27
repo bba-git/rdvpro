@@ -156,7 +156,7 @@ Dependencies: APPT-002
 ---
 
 ## SIGN-001: Prepare Signature Module Skeleton
-Status: Planned
+Status: Completed
 Priority: Medium
 Dependencies: None
 
@@ -164,6 +164,11 @@ Dependencies: None
 - Create SignatureService, SignatureController, SignatureModule
 - Create Signature DTOs if needed
 - Protect endpoints with JWT guard
+
+### Completed Implementation
+- Created src/signature/ module with service, controller, module, and DTOs
+- Protected endpoints with JwtAuthGuard and set up audit log stubs
+- Added unit tests for service and controller (all passing)
 
 ### Acceptance Criteria
 1. Signature module structure created
