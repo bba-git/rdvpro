@@ -57,4 +57,37 @@ export class AuthService {
       access_token: user.session.access_token,
     };
   }
+
+  async forgotPassword(email: string): Promise<void> {
+    try {
+      const { error } = await this.supabase.auth.resetPasswordForEmail(email);
+
+      if (error) {
+        await this.auditLogService.log(
+          'auth.password_reset.error',
+          email,
+          'error',
+          'auth',
+          { email, error: error.message },
+        );
+        return;
+      }
+
+      await this.auditLogService.log(
+        'auth.password_reset.request',
+        email,
+        'success',
+        'auth',
+        { email },
+      );
+    } catch (error) {
+      await this.auditLogService.log(
+        'auth.password_reset.error',
+        email,
+        'error',
+        'auth',
+        { email, error: error.message },
+      );
+    }
+  }
 } 

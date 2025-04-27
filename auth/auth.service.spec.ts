@@ -11,6 +11,7 @@ describe('AuthService', () => {
   const mockSupabase = {
     auth: {
       signInWithPassword: jest.fn(),
+      resetPasswordForEmail: jest.fn(),
     },
   };
 
@@ -112,6 +113,58 @@ describe('AuthService', () => {
       const result = await service.login(mockUser);
 
       expect(result).toEqual({ access_token: 'token123' });
+    });
+  });
+
+  describe('forgotPassword', () => {
+    it('should send reset email and log success for existing email', async () => {
+      const email = 'test@example.com';
+      mockSupabase.auth.resetPasswordForEmail.mockResolvedValue({ data: {}, error: null });
+
+      await service.forgotPassword(email);
+
+      expect(mockSupabase.auth.resetPasswordForEmail).toHaveBeenCalledWith(email);
+      expect(mockAuditLog.log).toHaveBeenCalledWith(
+        'auth.password_reset.request',
+        email,
+        'success',
+        'auth',
+        { email },
+      );
+    });
+
+    it('should log failure when Supabase returns error', async () => {
+      const email = 'test@example.com';
+      const error = { message: 'Rate limit exceeded' };
+      mockSupabase.auth.resetPasswordForEmail.mockResolvedValue({ data: null, error });
+
+      await service.forgotPassword(email);
+
+      expect(mockSupabase.auth.resetPasswordForEmail).toHaveBeenCalledWith(email);
+      expect(mockAuditLog.log).toHaveBeenCalledWith(
+        'auth.password_reset.error',
+        email,
+        'error',
+        'auth',
+        { email, error: error.message },
+      );
+    });
+
+    it('should handle and log unexpected errors', async () => {
+      const email = 'test@example.com';
+      const error = new Error('Network error');
+      mockSupabase.auth.resetPasswordForEmail.mockRejectedValue(error);
+
+      await service.forgotPassword(email);
+
+      expect(mockSupabase.auth.resetPasswordForEmail).toHaveBeenCalledWith(email);
+      expect(mockAuditLog.log).toHaveBeenCalledWith(
+        'auth.password_reset.error',
+        email,
+        'error',
+        'auth',
+        { email, error: error.message },
+      );
     });
   });
 }); 

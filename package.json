@@ -7,6 +7,7 @@
     "class-validator": "^0.14.1"
   },
   "devDependencies": {
+    "@golevelup/ts-jest": "^0.6.2",
     "@nestjs/testing": "^11.1.0",
     "@types/jest": "^29.5.14",
     "@types/supertest": "^6.0.3",

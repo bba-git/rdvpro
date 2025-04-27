@@ -13,6 +13,7 @@ describe('AuthController (Integration)', () => {
   const mockSupabase = {
     auth: {
       signInWithPassword: jest.fn(),
+      resetPasswordForEmail: jest.fn(),
     },
   };
 
@@ -143,6 +144,67 @@ describe('AuthController (Integration)', () => {
         .expect(HttpStatus.BAD_REQUEST);
 
       expect(mockSupabase.auth.signInWithPassword).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('POST /auth/forgot-password', () => {
+    it('should return 202 for valid email', async () => {
+      const email = 'test@example.com';
+      mockSupabase.auth.resetPasswordForEmail.mockResolvedValue({ data: {}, error: null });
+
+      await request(app.getHttpServer())
+        .post('/auth/forgot-password')
+        .send({ email })
+        .expect(HttpStatus.ACCEPTED);
+
+      expect(mockSupabase.auth.resetPasswordForEmail).toHaveBeenCalledWith(email);
+      expect(mockAuditLog.log).toHaveBeenCalledWith(
+        'auth.password_reset.request',
+        email,
+        'success',
+        'auth',
+        { email },
+      );
+    });
+
+    it('should return 202 even when email does not exist', async () => {
+      const email = 'nonexistent@example.com';
+      mockSupabase.auth.resetPasswordForEmail.mockResolvedValue({
+        data: null,
+        error: { message: 'User not found' },
+      });
+
+      await request(app.getHttpServer())
+        .post('/auth/forgot-password')
+        .send({ email })
+        .expect(HttpStatus.ACCEPTED);
+
+      expect(mockSupabase.auth.resetPasswordForEmail).toHaveBeenCalledWith(email);
+      expect(mockAuditLog.log).toHaveBeenCalledWith(
+        'auth.password_reset.error',
+        email,
+        'error',
+        'auth',
+        { email, error: 'User not found' },
+      );
+    });
+
+    it('should return 400 for invalid email format', async () => {
+      await request(app.getHttpServer())
+        .post('/auth/forgot-password')
+        .send({ email: 'invalid-email' })
+        .expect(HttpStatus.BAD_REQUEST);
+
+      expect(mockSupabase.auth.resetPasswordForEmail).not.toHaveBeenCalled();
+    });
+
+    it('should return 400 when email is missing', async () => {
+      await request(app.getHttpServer())
+        .post('/auth/forgot-password')
+        .send({})
+        .expect(HttpStatus.BAD_REQUEST);
+
+      expect(mockSupabase.auth.resetPasswordForEmail).not.toHaveBeenCalled();
     });
   });
 }); 

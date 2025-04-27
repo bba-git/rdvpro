@@ -9,6 +9,21 @@
   - Implemented structured error handling
   - Following NestJS standards and DTO validation
 
+- ✅ AUTH-002: Forgot Password
+  - Implemented forgot-password endpoint
+  - Added ForgotPasswordDto with email validation
+  - Integrated Supabase password reset
+  - Added audit logging for reset requests
+  - Implemented security best practices (202 response)
+  - Full test coverage (unit + integration)
+
+- ✅ AUTH-003: Forgot Password Rate Limiting
+  - Implemented RateLimitGuard for forgot-password endpoint
+  - Limited to 5 requests per IP per hour
+  - Added audit logging for rate limit blocks
+  - Maintained security best practices (no email existence disclosure)
+  - Full test coverage (unit + integration)
+
 ## In Progress
 - APPT-001: Appointment Service
 - CORE-003: API Gateway Rate Limiting

@@ -56,6 +56,27 @@ Dependencies: AUTH-001 must be completed first
 - Follow TDD (tests first, then implementation)
 - Respect structure defined in technical.md and .cursorcontext.md
 
+## AUTH-003: Forgot Password Rate Limiting
+Status: Completed
+Priority: High
+Dependencies: AUTH-002 must be completed first
+
+### Requirements
+- Implement rate limiting for the POST /auth/forgot-password endpoint
+- Prevent brute force attacks and abuse of password reset feature
+- Limit: 5 requests per hour per IP address
+- Return 429 Too Many Requests when limit is exceeded
+- Log rate limit blocks into audit_log
+- Apply security best practices (no disclosure of user existence)
+
+### Completed Implementation
+- Created custom RateLimitGuard with IP-based tracking
+- Applied rate limit only on /auth/forgot-password
+- Implemented in-memory rate limiting with auto-cleanup
+- Integrated audit logging for block events
+- Covered with unit tests and integration tests following TDD
+- Followed clean architecture and error handling best practices
+
 ---\
 \
 ## CORE-003: API Gateway Rate Limiting\
