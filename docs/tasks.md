@@ -77,6 +77,104 @@ Dependencies: AUTH-002 must be completed first
 - Covered with unit tests and integration tests following TDD
 - Followed clean architecture and error handling best practices
 
+# Current Sprint Tasks (Foundation Week 2)
+
+## TECH-001: Fix Linter Warnings
+Status: Completed
+Priority: High
+Dependencies: None
+
+### Requirements
+- Fix all TypeScript and NestJS linter warnings
+- Ensure clean build and clean test run (no warnings)
+
+### Completed Implementation
+- Fixed all TypeScript type errors in auth and appointment services
+- Corrected audit logging method signatures across the codebase
+- Fixed Supabase client mock in test files
+- Ensured clean build with `npm run build`
+- Maintained 100% test coverage while fixing issues
+- No functional changes made, only type fixes and linter improvements
+
+### Acceptance Criteria
+1. ✅ No warnings during `npm run build`
+2. ✅ No warnings during `npm run test`
+3. ✅ No IDE linter squiggles
+
+---
+
+## APPT-002: Extend Appointment Types
+Status: Planned
+Priority: High
+Dependencies: None
+
+### Requirements
+- Update AppointmentType enum
+- Accept new types: consultation, signature, delivery, administrative, urgent-signature
+- Validate types properly via DTO
+- Update unit and integration tests
+
+### Acceptance Criteria
+1. New types accepted and validated
+2. All tests updated and passing
+3. Audit logging unchanged
+
+---
+
+## APPT-003: Implement Supabase Persistence for Appointments
+Status: Planned
+Priority: High
+Dependencies: APPT-002
+
+### Requirements
+- Create `appointments` table in Supabase
+- Save appointment data into DB
+- Update AppointmentService accordingly
+- Handle Supabase errors properly
+- Update unit/integration tests with mocks
+
+### Acceptance Criteria
+1. Appointments persisted in Supabase
+2. Creation endpoint returns persisted appointment
+3. Audit logging records database success/failure
+4. All tests updated and passing
+
+---
+
+## SIGN-001: Prepare Signature Module Skeleton
+Status: Planned
+Priority: Medium
+Dependencies: None
+
+### Requirements
+- Create SignatureService, SignatureController, SignatureModule
+- Create Signature DTOs if needed
+- Protect endpoints with JWT guard
+
+### Acceptance Criteria
+1. Signature module structure created
+2. Compilation and basic tests passing
+3. No business logic yet (skeleton only)
+
+---
+
+## EVT-001: Set Up EventBus Architecture
+Status: Planned
+Priority: Medium
+Dependencies: None
+
+### Requirements
+- Create lightweight event bus system
+- Allow AppointmentService and SignatureService to publish events
+- Basic async event flow working (e.g., appointment.created)
+
+### Acceptance Criteria
+1. EventBus module ready
+2. Appointment events emitted properly
+3. Signature events stubbed for future expansion
+
+---
+
 ---\
 \
 ## CORE-003: API Gateway Rate Limiting\

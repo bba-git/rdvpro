@@ -6,7 +6,6 @@ import { createMock } from '@golevelup/ts-jest';
 
 describe('RateLimitGuard', () => {
   let guard: RateLimitGuard;
-  let auditLogService: AuditLogService;
 
   const mockAuditLog = {
     log: jest.fn(),
@@ -24,7 +23,6 @@ describe('RateLimitGuard', () => {
     }).compile();
 
     guard = module.get<RateLimitGuard>(RateLimitGuard);
-    auditLogService = module.get<AuditLogService>(AuditLogService);
 
     // Reset mock calls between tests
     jest.clearAllMocks();
@@ -76,7 +74,7 @@ describe('RateLimitGuard', () => {
         path: '/auth/forgot-password',
         limit: 5,
         window: '1 hour',
-        count: 6
+        count: 6,
       },
     );
   });
@@ -126,4 +124,4 @@ describe('RateLimitGuard', () => {
     const result = await guard.canActivate(createContext(ip2));
     expect(result).toBe(true);
   });
-}); 
+});

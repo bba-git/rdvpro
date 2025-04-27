@@ -14,4 +14,4 @@ export class AppointmentController {
   async createAppointment(@Body() createAppointmentDto: CreateAppointmentDto) {
     return this.appointmentService.createAppointment(createAppointmentDto);
   }
-} 
+}

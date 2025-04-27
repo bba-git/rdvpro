@@ -1,6 +1,15 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 
+interface AuditLogEntry {
+  user_id: string;
+  action: string;
+  status: string;
+  entity: string;
+  metadata: Record<string, unknown>;
+  timestamp: string;
+}
+
 @Injectable()
 export class AuditLogService {
   constructor(@Inject('SUPABASE_CLIENT') private readonly supabase: SupabaseClient) {}
@@ -10,9 +19,9 @@ export class AuditLogService {
     userId: string,
     status: string,
     entity: string,
-    metadata?: any,
+    metadata: Record<string, unknown> = {},
   ): Promise<void> {
-    const entry = {
+    const entry: AuditLogEntry = {
       user_id: userId,
       action,
       status,
@@ -22,4 +31,4 @@ export class AuditLogService {
     };
     await this.supabase.from('audit_log').insert(entry);
   }
-} 
+}

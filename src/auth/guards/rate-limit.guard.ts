@@ -1,4 +1,10 @@
-import { Injectable, CanActivate, ExecutionContext, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { AuditLogService } from '../../supabase/audit-log.service';
 
 interface RateLimit {
@@ -48,18 +54,12 @@ export class RateLimitGuard implements CanActivate {
 
     // Check if rate limit exceeded
     if (rateLimit.count > this.MAX_REQUESTS) {
-      await this.auditLogService.log(
-        'auth.rate_limit.blocked',
-        ip,
-        'blocked',
-        'auth',
-        {
-          path,
-          limit: this.MAX_REQUESTS,
-          window: '1 hour',
-          count: rateLimit.count
-        }
-      );
+      await this.auditLogService.log('auth.rate_limit.blocked', ip, 'blocked', 'auth', {
+        path,
+        limit: this.MAX_REQUESTS,
+        window: '1 hour',
+        count: rateLimit.count,
+      });
       throw new HttpException('Too Many Requests', HttpStatus.TOO_MANY_REQUESTS);
     }
 
@@ -79,4 +79,4 @@ export class RateLimitGuard implements CanActivate {
   private resetRateLimits(): void {
     this.rateLimits.clear();
   }
-} 
+}

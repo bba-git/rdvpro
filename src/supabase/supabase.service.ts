@@ -3,11 +3,9 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 @Injectable()
 export class SupabaseService {
-  constructor(
-    @Inject('SUPABASE_CLIENT') private readonly supabase: SupabaseClient,
-  ) {}
+  constructor(@Inject('SUPABASE_CLIENT') private readonly supabase: SupabaseClient) {}
 
   getClient(): SupabaseClient {
     return this.supabase;
   }
-} 
+}

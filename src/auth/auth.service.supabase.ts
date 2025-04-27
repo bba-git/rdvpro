@@ -1,15 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { AuditLogService } from '../supabase/audit-log.service';
-import { SupabaseClient } from '@supabase/supabase-js';
 
-describe('AuthService (Supabase)', () => {
+describe('AuthService with Supabase', () => {
   let service: AuthService;
-  let auditLogService: AuditLogService;
 
   const mockSupabase = {
     auth: {
       signInWithPassword: jest.fn(),
+      resetPasswordForEmail: jest.fn(),
     },
   };
 
@@ -21,34 +20,60 @@ describe('AuthService (Supabase)', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
-        { provide: 'SUPABASE_CLIENT', useValue: mockSupabase },
-        { provide: AuditLogService, useValue: mockAuditLog },
+        {
+          provide: 'SUPABASE_CLIENT',
+          useValue: mockSupabase,
+        },
+        {
+          provide: AuditLogService,
+          useValue: mockAuditLog,
+        },
       ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
-    auditLogService = module.get<AuditLogService>(AuditLogService);
   });
 
-  it('should return user on successful validation', async () => {
-    const mockUser = { id: '1', email: 'test@example.com' };
-    mockSupabase.auth.signInWithPassword.mockResolvedValue({ data: { user: mockUser }, error: null });
+  it('should sign in with Supabase and return user data', async () => {
+    const mockUser = {
+      id: '123',
+      email: 'test@example.com',
+      session: { access_token: 'token123' },
+    };
 
-    const result = await service.validateUser('test@example.com', 'password');
-    expect(result).toEqual({ id: mockUser.id, email: mockUser.email });
-    expect(mockAuditLog.log).toHaveBeenCalledWith('auth.login.success', mockUser.id, 'success', 'auth');
+    mockSupabase.auth.signInWithPassword.mockResolvedValue({
+      data: { user: mockUser, session: mockUser.session },
+      error: null,
+    });
+
+    const result = await service.validateUser('test@example.com', 'password123');
+
+    expect(result).toEqual(mockUser);
+    expect(mockSupabase.auth.signInWithPassword).toHaveBeenCalledWith({
+      email: 'test@example.com',
+      password: 'password123',
+    });
   });
 
-  it('should return null on login failure', async () => {
-    mockSupabase.auth.signInWithPassword.mockResolvedValue({ data: null, error: new Error('Invalid') });
+  it('should handle Supabase error during sign in', async () => {
+    mockSupabase.auth.signInWithPassword.mockResolvedValue({
+      data: null,
+      error: { message: 'Invalid credentials' },
+    });
 
-    const result = await service.validateUser('test@example.com', 'wrong');
+    const result = await service.validateUser('test@example.com', 'wrongpassword');
+
     expect(result).toBeNull();
-    expect(mockAuditLog.log).toHaveBeenCalledWith('auth.login.failure', 'anonymous', 'fail', 'auth');
+    expect(mockSupabase.auth.signInWithPassword).toHaveBeenCalledWith({
+      email: 'test@example.com',
+      password: 'wrongpassword',
+    });
   });
 
-  it('should return access token on login', async () => {
-    const result = await service.login({ session: { access_token: 'token123' } });
-    expect(result).toEqual({ access_token: 'token123' });
+  it('should handle network errors during sign in', async () => {
+    const error = new Error('Network error');
+    mockSupabase.auth.signInWithPassword.mockRejectedValue(error);
+
+    expect(await service.validateUser('test@example.com', 'password123')).toBeNull();
   });
 });

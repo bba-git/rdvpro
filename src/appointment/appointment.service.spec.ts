@@ -6,7 +6,6 @@ import { AppointmentType } from './dto/create-appointment.dto';
 
 describe('AppointmentService', () => {
   let service: AppointmentService;
-  let supabaseService: SupabaseService;
 
   const mockSupabaseService = {
     getClient: jest.fn(),
@@ -24,7 +23,6 @@ describe('AppointmentService', () => {
     }).compile();
 
     service = module.get<AppointmentService>(AppointmentService);
-    supabaseService = module.get<SupabaseService>(SupabaseService);
   });
 
   it('should be defined', () => {
@@ -78,7 +76,9 @@ describe('AppointmentService', () => {
 
       mockSupabaseService.getClient.mockReturnValue(mockSupabaseClient);
 
-      await expect(service.createAppointment(validAppointmentDto)).rejects.toThrow('Database error');
+      await expect(service.createAppointment(validAppointmentDto)).rejects.toThrow(
+        'Database error',
+      );
     });
   });
-}); 
+});

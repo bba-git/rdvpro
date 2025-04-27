@@ -1,12 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { AuditLogService } from '../supabase/audit-log.service';
-import { SupabaseClient } from '@supabase/supabase-js';
 
 describe('AuthService', () => {
   let service: AuthService;
-  let auditLogService: AuditLogService;
-  let supabaseClient: SupabaseClient;
 
   const mockSupabase = {
     auth: {
@@ -35,8 +32,6 @@ describe('AuthService', () => {
     }).compile();
 
     service = module.get<AuthService>(AuthService);
-    auditLogService = module.get<AuditLogService>(AuditLogService);
-    supabaseClient = module.get<SupabaseClient>('SUPABASE_CLIENT');
   });
 
   describe('validateUser', () => {
@@ -167,4 +162,4 @@ describe('AuthService', () => {
       );
     });
   });
-}); 
+});

@@ -8,7 +8,7 @@ const SupabaseProvider = {
   useFactory: (configService: ConfigService) => {
     return createClient(
       configService.get<string>('SUPABASE_URL'),
-      configService.get<string>('SUPABASE_KEY')
+      configService.get<string>('SUPABASE_KEY'),
     );
   },
   inject: [ConfigService],
@@ -18,6 +18,6 @@ const SupabaseProvider = {
 @Module({
   imports: [ConfigModule],
   providers: [SupabaseProvider, AuditLogService],
-  exports: ['SUPABASE_CLIENT', AuditLogService]
+  exports: ['SUPABASE_CLIENT', AuditLogService],
 })
-export class SupabaseModule {} 
+export class SupabaseModule {}

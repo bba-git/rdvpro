@@ -7,8 +7,6 @@ import { AuditLogService } from '../supabase/audit-log.service';
 
 describe('AuthController (Integration)', () => {
   let app: INestApplication;
-  let authService: AuthService;
-  let auditLogService: AuditLogService;
 
   const mockSupabase = {
     auth: {
@@ -41,9 +39,6 @@ describe('AuthController (Integration)', () => {
     // Enable validation pipe for DTO validation
     app.useGlobalPipes(new ValidationPipe());
     await app.init();
-
-    authService = moduleFixture.get<AuthService>(AuthService);
-    auditLogService = moduleFixture.get<AuditLogService>(AuditLogService);
   });
 
   beforeEach(() => {
@@ -198,4 +193,4 @@ describe('AuthController (Integration)', () => {
       expect(mockSupabase.auth.resetPasswordForEmail).not.toHaveBeenCalled();
     });
   });
-}); 
+});

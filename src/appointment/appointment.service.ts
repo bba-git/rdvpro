@@ -36,4 +36,4 @@ export class AppointmentService {
 
     return data;
   }
-} 
+}

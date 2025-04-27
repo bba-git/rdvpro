@@ -9,4 +9,4 @@ import { SupabaseModule } from '../supabase/supabase.module';
   providers: [AppointmentService],
   exports: [AppointmentService],
 })
-export class AppointmentModule {} 
+export class AppointmentModule {}

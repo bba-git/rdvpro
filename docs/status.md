@@ -24,29 +24,41 @@
   - Maintained security best practices (no email existence disclosure)
   - Full test coverage (unit + integration)
 
+- ✅ TECH-001: Fix Linter Warnings
+  - Fixed all TypeScript and NestJS linter warnings
+  - Ensured clean build and test runs
+  - Maintained test coverage while fixing issues
+  - Preserved audit logging functionality
+  - No functional changes made
+
 ## In Progress
-- APPT-001: Appointment Service
+- APPT-002: Extend Appointment Types
+- APPT-003: Implement Supabase Persistence for Appointments
 - CORE-003: API Gateway Rate Limiting
 
 ## Planned
+- SIGN-001: Prepare Signature Module Skeleton
+- EVT-001: Set Up EventBus Architecture
 - MON-004: Observability Setup (local logging, later Prometheus stack)
 - EXT-005: Stub MICEN Adapter
 
-## Sprint: Foundation Setup (Week 1)
+## Sprint: Foundation Setup (Week 2)
 
 ### 🚀 In Progress
-- AuthService fully operational
-- AppointmentService: Interfaces and DB schema defined
+- Linter issues cleanup underway
+- AppointmentService: Expanding AppointmentType enum
+- AppointmentService: Migrating persistence to Supabase database
 - API Gateway: Configuring rate limiter and CORS rules
 
 ### 📝 Planned
-- SignatureService integration (next sprint)
-- EventBus connectivity for async flows
-- MICENAdapter stub (external interface)
+- SignatureService initial module structure
+- EventBus internal event flow preparation
+- MICENAdapter stub preparation
 
 ### 🛑 Blockers / Issues
 - Need final confirmation of PDP interface specs (v1.0 draft shared)
 
 ### 📈 Observability & Logs
+- Audit logging operational across auth and appointment
 - Local log ingestion functional
-- Full monitoring stack (Prometheus/Grafana) planned, not yet started
+- Full monitoring stack (Prometheus/Grafana) planned for Sprint 3
