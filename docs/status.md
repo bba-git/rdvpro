@@ -1,4 +1,4 @@
-# Project Status
+# Project Status: RDVPro
 
 ## Completed Tasks
 - ✅ AUTH-001: Authentication Service
@@ -29,26 +29,24 @@
 - CORE-003: API Gateway Rate Limiting
 
 ## Planned
-- MON-004: Prometheus and Grafana Setup
+- MON-004: Observability Setup (local logging, later Prometheus stack)
 - EXT-005: Stub MICEN Adapter
 
-## Sprint: Foundation Setup (Week 1)\
-\
-### \uc0\u55357 \u56999  In Progress\
-- AuthService structure created with JWT module\
-- AppointmentService: Interfaces and DB schema defined\
-- API Gateway: Configuring rate limiter and CORS rules\
-\
-### \uc0\u55357 \u56604  Planned\
-- SignatureService integration\
-- EventBus connectivity for async flows\
-- MICENAdapter stub\
-\
-### \uc0\u55357 \u56350  Blockers / Issues\
-- Need final confirmation of PDP interface specs (v1.0 draft shared)\
-- Missing Grafana provisioning dashboard templates (pending Terraform step)\
-\
-### \uc0\u55357 \u56589  Observability & Logs\
-- Log ingestion tested with Azure Monitor\
-- Grafana visible, alerts not yet configured\
-}
+## Sprint: Foundation Setup (Week 1)
+
+### 🚀 In Progress
+- AuthService fully operational
+- AppointmentService: Interfaces and DB schema defined
+- API Gateway: Configuring rate limiter and CORS rules
+
+### 📝 Planned
+- SignatureService integration (next sprint)
+- EventBus connectivity for async flows
+- MICENAdapter stub (external interface)
+
+### 🛑 Blockers / Issues
+- Need final confirmation of PDP interface specs (v1.0 draft shared)
+
+### 📈 Observability & Logs
+- Local log ingestion functional
+- Full monitoring stack (Prometheus/Grafana) planned, not yet started
