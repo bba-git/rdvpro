@@ -30,13 +30,22 @@ describe('AppointmentService', () => {
   });
 
   describe('createAppointment', () => {
-    const validAppointmentDto: CreateAppointmentDto = {
+    const createValidAppointmentDto = (type: AppointmentType): CreateAppointmentDto => ({
       clientName: 'John Doe',
       dateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
-      appointmentType: AppointmentType.CONSULTATION,
-    };
+      appointmentType: type,
+    });
 
-    it('should create an appointment successfully', async () => {
+    const appointmentTypes = [
+      AppointmentType.CONSULTATION,
+      AppointmentType.SIGNATURE,
+      AppointmentType.DELIVERY,
+      AppointmentType.ADMINISTRATIVE,
+      AppointmentType.URGENT_SIGNATURE,
+    ];
+
+    it.each(appointmentTypes)('should create a %s appointment successfully', async (type) => {
+      const validAppointmentDto = createValidAppointmentDto(type);
       const mockSupabaseClient = {
         from: jest.fn().mockReturnThis(),
         insert: jest.fn().mockReturnThis(),
@@ -57,7 +66,7 @@ describe('AppointmentService', () => {
 
     it('should throw an error if appointment date is in the past', async () => {
       const invalidAppointmentDto: CreateAppointmentDto = {
-        ...validAppointmentDto,
+        ...createValidAppointmentDto(AppointmentType.CONSULTATION),
         dateTime: new Date(Date.now() - 86400000).toISOString(), // Yesterday
       };
 
@@ -67,6 +76,7 @@ describe('AppointmentService', () => {
     });
 
     it('should handle database errors', async () => {
+      const validAppointmentDto = createValidAppointmentDto(AppointmentType.CONSULTATION);
       const mockSupabaseClient = {
         from: jest.fn().mockReturnThis(),
         insert: jest.fn().mockReturnThis(),

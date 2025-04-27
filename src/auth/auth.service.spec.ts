@@ -102,6 +102,8 @@ describe('AuthService', () => {
   describe('login', () => {
     it('should return access token from user session', async () => {
       const mockUser = {
+        id: 'user123',
+        email: 'test@example.com',
         session: { access_token: 'token123' },
       };
 

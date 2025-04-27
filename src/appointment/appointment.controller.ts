@@ -11,7 +11,7 @@ export class AppointmentController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async createAppointment(@Body() createAppointmentDto: CreateAppointmentDto) {
+  async create(@Body() createAppointmentDto: CreateAppointmentDto) {
     return this.appointmentService.createAppointment(createAppointmentDto);
   }
 }

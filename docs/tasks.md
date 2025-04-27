@@ -104,7 +104,7 @@ Dependencies: None
 ---
 
 ## APPT-002: Extend Appointment Types
-Status: Planned
+Status: Completed
 Priority: High
 Dependencies: None
 
@@ -114,10 +114,17 @@ Dependencies: None
 - Validate types properly via DTO
 - Update unit and integration tests
 
+### Completed Implementation
+- Added new appointment types to AppointmentType enum
+- Updated CreateAppointmentDto with proper validation
+- Extended test coverage for all appointment types
+- Maintained existing audit logging functionality
+- All tests passing with no regressions
+
 ### Acceptance Criteria
-1. New types accepted and validated
-2. All tests updated and passing
-3. Audit logging unchanged
+1. ✅ New types accepted and validated
+2. ✅ All tests updated and passing
+3. ✅ Audit logging unchanged
 
 ---
 

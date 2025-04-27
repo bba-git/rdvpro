@@ -4,6 +4,8 @@ export enum AppointmentType {
   CONSULTATION = 'consultation',
   SIGNATURE = 'signature',
   DELIVERY = 'delivery',
+  ADMINISTRATIVE = 'administrative',
+  URGENT_SIGNATURE = 'urgent-signature',
 }
 
 export class CreateAppointmentDto {

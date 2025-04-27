@@ -8,8 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SupabaseModule = void 0;
 const common_1 = require("@nestjs/common");
-const supabase_js_1 = require("@supabase/supabase-js");
 const config_1 = require("@nestjs/config");
+const supabase_js_1 = require("@supabase/supabase-js");
+const audit_log_service_1 = require("./audit-log.service");
 const SupabaseProvider = {
     provide: 'SUPABASE_CLIENT',
     useFactory: (configService) => {
@@ -24,8 +25,8 @@ exports.SupabaseModule = SupabaseModule = __decorate([
     (0, common_1.Global)(),
     (0, common_1.Module)({
         imports: [config_1.ConfigModule],
-        providers: [SupabaseProvider],
-        exports: ['SUPABASE_CLIENT']
+        providers: [SupabaseProvider, audit_log_service_1.AuditLogService],
+        exports: ['SUPABASE_CLIENT', audit_log_service_1.AuditLogService],
     })
 ], SupabaseModule);
 //# sourceMappingURL=supabase.module.js.map

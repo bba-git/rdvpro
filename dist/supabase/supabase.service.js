@@ -12,29 +12,21 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuditLogService = void 0;
+exports.SupabaseService = void 0;
 const common_1 = require("@nestjs/common");
 const supabase_js_1 = require("@supabase/supabase-js");
-let AuditLogService = class AuditLogService {
+let SupabaseService = class SupabaseService {
     constructor(supabase) {
         this.supabase = supabase;
     }
-    async log(action, userId, status, entity, metadata = {}) {
-        const entry = {
-            user_id: userId,
-            action,
-            status,
-            entity,
-            metadata,
-            timestamp: new Date().toISOString(),
-        };
-        await this.supabase.from('audit_log').insert(entry);
+    getClient() {
+        return this.supabase;
     }
 };
-exports.AuditLogService = AuditLogService;
-exports.AuditLogService = AuditLogService = __decorate([
+exports.SupabaseService = SupabaseService;
+exports.SupabaseService = SupabaseService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)('SUPABASE_CLIENT')),
     __metadata("design:paramtypes", [supabase_js_1.SupabaseClient])
-], AuditLogService);
-//# sourceMappingURL=audit-log.service.js.map
+], SupabaseService);
+//# sourceMappingURL=supabase.service.js.map

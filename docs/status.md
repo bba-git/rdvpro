@@ -31,9 +31,21 @@
   - Preserved audit logging functionality
   - No functional changes made
 
+- ✅ APPT-002: Extend Appointment Types
+  - Added new appointment types: administrative and urgent-signature
+  - Updated DTO validation for new types
+  - Extended test coverage for all appointment types
+  - Maintained audit logging functionality
+  - No breaking changes to existing code
+
+- ✅ APPT-003: Implement Supabase Persistence for Appointments
+  - Implemented appointments table in Supabase
+  - Added appointment creation with proper error handling
+  - Integrated audit logging for database operations
+  - Full test coverage with Supabase mocks
+  - All tests passing with persistence layer
+
 ## In Progress
-- APPT-002: Extend Appointment Types
-- APPT-003: Implement Supabase Persistence for Appointments
 - CORE-003: API Gateway Rate Limiting
 
 ## Planned
