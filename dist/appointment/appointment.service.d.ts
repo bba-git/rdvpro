@@ -1,7 +1,7 @@
-import { SupabaseService } from '../supabase/supabase.service';
+import { SupabaseClient } from '@supabase/supabase-js';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 export declare class AppointmentService {
-    private readonly supabaseService;
-    constructor(supabaseService: SupabaseService);
+    private readonly supabase;
+    constructor(supabase: SupabaseClient);
     createAppointment(createAppointmentDto: CreateAppointmentDto): Promise<any>;
 }

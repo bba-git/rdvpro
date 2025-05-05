@@ -1,7 +1,8 @@
 import { Controller, Post, Get, Put, Delete, Body, Param, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { SignatureService } from './signature.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-// import { CreateSignatureDto, UpdateSignatureDto } from './dto'; // To be created
+import { CreateSignatureDto } from './dto/create-signature.dto';
+import { UpdateSignatureDto } from './dto/update-signature.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('signature')

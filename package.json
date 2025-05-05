@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "dependencies": {
     "@nestjs/common": "^11.1.0",
     "@nestjs/config": "^4.0.2",
@@ -29,6 +28,8 @@
   },
   "scripts": {
     "build": "nest build",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
     "test:cov": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",

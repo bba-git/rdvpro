@@ -40,3 +40,21 @@
 - Orchestrated via Kubernetes (Azure AKS preferred)\
 - CI/CD via GitHub Actions or GitLab CI\
 - Secret management via Azure Key Vault}
+
+## Database Schema
+
+### appointments
+- `id`: UUID (primary key)
+- `client_name`: text
+- `date_time`: timestamptz
+- `appointment_type`: enum (consultation, signature, delivery, administrative, urgent-signature)
+- `created_at`, `updated_at`: timestamptz
+
+### audit_log
+- `id`: UUID (primary key)
+- `action`: text
+- `entity`: text
+- `entity_id`: UUID (nullable)
+- `status`: text ('info', 'error', 'success')
+- `details`: JSONB
+- `created_at`: timestamptz
