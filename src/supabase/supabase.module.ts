@@ -1,15 +1,22 @@
-import { Module, Global } from '@nestjs/common';
+import { Module, Global, Logger } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { AuditLogService } from './audit-log.service';
 
 const SupabaseProvider = {
   provide: 'SUPABASE_CLIENT',
-  useFactory: (configService: ConfigService) => {
-    return createClient(
-      configService.get<string>('SUPABASE_URL'),
-      configService.get<string>('SUPABASE_KEY'),
-    );
+  useFactory: (configService: ConfigService): SupabaseClient => {
+    const logger = new Logger('SupabaseModule');
+    const url = configService.get<string>('SUPABASE_URL');
+    const key = configService.get<string>('SUPABASE_KEY');
+
+    if (!url || !key) {
+      logger.error('❌ Missing SUPABASE_URL or SUPABASE_KEY in environment variables.');
+      throw new Error('Supabase configuration is incomplete.');
+    }
+
+    logger.log('✅ Supabase client successfully initialized.');
+    return createClient(url, key);
   },
   inject: [ConfigService],
 };

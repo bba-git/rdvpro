@@ -78,3 +78,18 @@
 - Audit logging operational across auth and appointment
 - Local log ingestion functional
 - Full monitoring stack (Prometheus/Grafana) planned for Sprint 3
+
+- AUTH-004: Implement JWT Strategy
+  - ✅ Strategy class and guard wired in NestJS Auth module
+  - ✅ Fixed runtime issue with missing JWT strategy registration
+  - ✅ TDD-driven implementation complete (unit + integration)
+  - ✅ JWT validation with Supabase tokens working
+  - ✅ Audit logging for auth success/failure implemented
+  - ✅ Protected routes working with JwtAuthGuard
+
+- ✅ DEV-001: Seed Script (Appointment + Signature)
+  - Created a reusable development seed script
+  - Authenticates with Supabase, fetches JWT token
+  - Sends valid POST requests to /appointments and /signature
+  - Logs audit trail on all calls (success and failure)
+  - Responses saved to local files for testing

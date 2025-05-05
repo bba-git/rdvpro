@@ -154,6 +154,32 @@ Dependencies: APPT-002
 4. ✅ All tests updated and passing
 
 ---
+## AUTH-004: Implement JWT Strategy
+Status: Completed
+Priority: Critical
+Dependencies: AUTH-001, AUTH-002, Supabase Auth
+
+### Requirements
+- Add Passport JWT Strategy to validate Supabase tokens
+- Load strategy using `@nestjs/passport` + `passport-jwt`
+- Connect Supabase JWT to strategy payload verification
+- Protect endpoints with `JwtAuthGuard`
+- Ensure user info is correctly extracted and passed in `request.user`
+- Audit failed and successful authentication attempts
+
+### Completed Implementation
+- Created JwtStrategy with Supabase token validation
+- Added PassportModule with JWT default strategy
+- Implemented comprehensive test coverage
+- Added audit logging for auth success/failure
+- Protected routes with JwtAuthGuard
+- Fixed "Unknown authentication strategy 'jwt'" error
+
+### Acceptance Criteria
+1. ✅ Authenticated requests access protected endpoints
+2. ✅ Invalid/missing tokens return 401
+3. ✅ JwtAuthGuard wired and working
+4. ✅ Full unit + integration test coverage
 
 ## SIGN-001: Prepare Signature Module Skeleton
 Status: Completed
@@ -254,3 +280,34 @@ Dependencies: CORE-003\
 1. MICENAdapter responds with stub data\
 2. Logs track each outgoing attempt\
 3. Ready for real integration in Sprint 2}
+
+## DEV-001: Development Seed Script
+Status: ✅ Completed  
+Priority: Medium  
+Dependencies: AUTH-004, APPT-003, SIGN-001  
+
+### Objective
+Create a CLI script to seed the backend with development data (appointment + signature), using authenticated requests and verifying audit logging.
+
+### Requirements
+- Authenticate using Supabase credentials
+- Retrieve JWT token and include in Authorization header
+- POST a valid appointment to `/appointments`
+- POST a valid signature request to `/signature`
+- Print responses and errors to the console
+- Optionally save responses to local files
+- Confirm Supabase persistence and audit log entry
+
+### Technical Notes
+- Script location: `scripts/dev/seed.ts`
+- Run using: `npm run seed` (script alias in package.json)
+- Uses Axios with async/await
+- Loads credentials from environment variables (`.env`)
+- Includes retry logic and structured logging
+
+### Acceptance Criteria
+1. ✅ Auth token fetched and included correctly  
+2. ✅ Appointment and signature created via API  
+3. ✅ Responses logged or saved locally  
+4. ✅ Audit entries recorded in Supabase  
+5. ✅ No errors during execution  
